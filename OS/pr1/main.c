@@ -28,6 +28,7 @@ int main(int argc, char ** argv)
 
 	long int m, q, r;
 	FILE * fileInput = fopen("input.txt", "r+");
+	FILE * fileOutput = fopen("output.txt", "w+");
 	long int position = ftell(fileInput);
 	int error = fscanf(fileInput, "%ld %ld %ld", &m, &q, &r);
 	if (error == EOF)
@@ -65,6 +66,7 @@ int main(int argc, char ** argv)
 		}
 		else
 		{
+			local_offset = r;
 			offset = local_logical_adress & OFFSET;
 			PML4E  = local_logical_adress & PML4;
 			PDPTE  = local_logical_adress & PDPT;
@@ -208,7 +210,7 @@ int main(int argc, char ** argv)
 						}
 						else
 						{
-							ok ++;
+							ok++;
 							//printf("fault\n");
 							break;
 						}
@@ -232,7 +234,8 @@ int main(int argc, char ** argv)
 
 				printf("%ld \n", physical_adress);
 
-				local_offset = r;
+				fprintf(fileOutput, "%ld\n", physical_adress);
+
 				PML4E = 0;
 				PDPTE = 0;
 				PDE = 0;
@@ -245,6 +248,7 @@ int main(int argc, char ** argv)
 			{
 				ok = 0;
 				printf("fault\n");
+				fprintf(fileOutput, "%s", "fault\n");
 				continue;
 			}
 		}
@@ -252,6 +256,7 @@ int main(int argc, char ** argv)
 	}
 
 	fclose(fileInput);
+	fclose(fileOutput);
 	system("pause");
 	return(0);
 }
