@@ -8,7 +8,7 @@
 #define PT  		0x00000000001ff000
 #define OFFSET		0x0000000000000fff
 #define PERPOSE		0x000ffffffffff000
-#define P           0x0000000000000001
+#define P               0x0000000000000001
 
 int main(int argc, char ** argv)
 {
